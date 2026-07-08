@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harini · CS Student & Web Developer</title>
+<meta name="description" content="Portfolio of Harini — Computer Science & Business Systems student, web developer, and Java learner in progress.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F1E7;
+    --paper-alt:#EFE7D6;
+    --ink:#232722;
+    --ink-soft:#585f56;
+    --thread:#A8672E;      /* rust/mustard thread */
+    --thread-teal:#3E6E64; /* embroidery teal */
+    --line:#d8cfba;
+    --white:#FFFDF8;
+    --radius:2px;
+  }
+ 
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Sans 3', sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+ 
+  /* ---------- Stitch signature element ---------- */
+  .stitch-divider{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:0 auto;
+    width:100%;
+    max-width:1100px;
+    padding:0 32px;
+  }
+  .stitch-divider svg{flex:1;height:14px;color:var(--thread);}
+  .stitch-divider .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+ 
+  /* ---------- Layout helpers ---------- */
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
+  section{padding:96px 0;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--thread);
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    display:inline-block;
+    width:18px;height:1px;
+    background:var(--thread);
+  }
+ 
+  /* ---------- Nav ---------- */
+  header.site-nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,241,231,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1100px;margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:20px;
+    text-decoration:none;
+  }
+  .nav-links{
+    display:flex;gap:28px;list-style:none;margin:0;padding:0;
+  }
+  .nav-links a{
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink-soft);
+    position:relative;
+    padding-bottom:3px;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a::after{
+    content:'';
+    position:absolute;left:0;bottom:-2px;width:0;height:1px;
+    background:var(--thread);
+    transition:width .2s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;}
+ 
+  @media (max-width:760px){
+    .nav-links{
+      position:fixed;top:60px;right:0;left:0;
+      background:var(--white);
+      flex-direction:column;
+      gap:0;
+      padding:8px 0;
+      border-bottom:1px solid var(--line);
+      transform:translateY(-8px);
+      opacity:0;
+      pointer-events:none;
+      transition:all .18s ease;
+    }
+    .nav-links.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+    .nav-links a{
+      padding:14px 32px;
+      display:block;
+      width:100%;
+    }
+    .nav-toggle{display:block;}
+  }
+ 
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:110px 0 90px;
+    position:relative;
+  }
+  .hero .eyebrow{margin-bottom:20px;}
+  .hero h1{
+    font-size:clamp(40px, 7vw, 72px);
+    line-height:1.05;
+    max-width:820px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--thread);
+  }
+  .hero p.lede{
+    max-width:560px;
+    font-size:19px;
+    color:var(--ink-soft);
+    margin-top:24px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:16px;
+    margin-top:36px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    letter-spacing:.03em;
+    text-decoration:none;
+    padding:13px 22px;
+    border-radius:var(--radius);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid var(--ink);
+    transition:all .15s ease;
+  }
+  .btn-solid{background:var(--ink);color:var(--paper);}
+  .btn-solid:hover{background:var(--thread);border-color:var(--thread);}
+  .btn-outline{background:transparent;color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--paper);}
+ 
+  .hero-meta{
+    margin-top:56px;
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+    border-top:1px solid var(--line);
+    padding-top:28px;
+    max-width:640px;
+  }
+  .hero-meta div{font-size:13px;color:var(--ink-soft);}
+  .hero-meta strong{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    color:var(--ink);
+    font-weight:600;
+  }
+ 
+  /* ---------- Projects ---------- */
+  .projects-grid{
+    display:grid;
+    gap:28px;
+    margin-top:48px;
+  }
+  .project-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:38px;
+    position:relative;
+    overflow:hidden;
+  }
+  .project-card::before{
+    content:'';
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:4px;
+    background:var(--thread);
+  }
+  .project-card.teal::before{background:var(--thread-teal);}
+  .project-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .project-card h3{font-size:26px;margin-bottom:6px;}
+  .project-role{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  .stack{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:18px 0 20px;
+  }
+  .stack span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    background:var(--paper-alt);
+    padding:5px 10px;
+    border-radius:20px;
+    color:var(--ink-soft);
+  }
+  .project-card p{color:var(--ink-soft);margin:0 0 12px;}
+  .project-card p:last-of-type{margin-bottom:0;}
+  .learned{
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px dashed var(--line);
+    font-size:15px;
+  }
+  .learned strong{color:var(--ink);}
+ 
+  /* ---------- Skills ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:32px;
+    margin-top:48px;
+  }
+  .skill-group h4{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--thread-teal);
+    margin-bottom:14px;
+  }
+  .skill-group ul{list-style:none;margin:0;padding:0;}
+  .skill-group li{
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+    font-size:15px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .skill-group li:last-child{border-bottom:none;}
+  .skill-tag-note{font-size:12px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
+ 
+  .langs{
+    margin-top:56px;
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+  }
+  .lang-item{min-width:140px;}
+  .lang-item .lname{font-weight:600;margin-bottom:8px;}
+  .lang-bar{background:var(--paper-alt);height:6px;border-radius:4px;overflow:hidden;}
+  .lang-bar i{display:block;height:100%;background:var(--thread);border-radius:4px;}
+  .lang-item small{color:var(--ink-soft);font-size:12px;}
+ 
+  /* ---------- Timeline (education/experience) ---------- */
+  .timeline{
+    margin-top:48px;
+    display:grid;
+    gap:0;
+  }
+  .tl-item{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:28px;
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .tl-item:first-child{padding-top:0;}
+  .tl-item:last-child{border-bottom:none;}
+  .tl-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--thread);
+    padding-top:4px;
+  }
+  .tl-body h3{font-size:20px;}
+  .tl-org{color:var(--ink-soft);font-size:14px;margin:4px 0 10px;}
+  .tl-body ul{margin:0;padding-left:18px;color:var(--ink-soft);font-size:15px;}
+  .tl-body li{margin-bottom:6px;}
+ 
+  @media (max-width:640px){
+    .tl-item{grid-template-columns:1fr;gap:6px;}
+  }
+ 
+  /* ---------- Certs & achievements strip ---------- */
+  .chips-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:20px;
+  }
+  .chip{
+    background:var(--paper-alt);
+    border:1px solid var(--line);
+    padding:10px 16px;
+    border-radius:20px;
+    font-size:13.5px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .chip .dot{width:6px;height:6px;border-radius:50%;background:var(--thread-teal);}
+ 
+  /* ---------- About / hobbies aside ---------- */
+  .about-split{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:56px;
+    margin-top:48px;
+    align-items:start;
+  }
+  .about-split p{color:var(--ink-soft);}
+  .hobby-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    padding:28px;
+    border-radius:var(--radius);
+  }
+  .hobby-card h4{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin-bottom:16px;
+    color:var(--thread);
+  }
+  .hobby-card ul{list-style:none;margin:0;padding:0;}
+  .hobby-card li{
+    padding:10px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:15px;
+  }
+  .hobby-card li:last-child{border-bottom:none;}
+ 
+  @media (max-width:800px){
+    .about-split{grid-template-columns:1fr;}
+  }
+ 
+  /* ---------- Contact ---------- */
+  .contact-section{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .contact-section .eyebrow{color:var(--thread);}
+  .contact-section .eyebrow::before{background:var(--thread);}
+  .contact-section h2{
+    color:var(--white);
+    font-size:clamp(32px,5vw,48px);
+    max-width:640px;
+  }
+  .contact-section p.lede{color:#c8c9c3;max-width:480px;margin-top:18px;}
+  .contact-grid{
+    margin-top:48px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:20px;
+  }
+  .contact-card{
+    border:1px solid #3d423b;
+    padding:24px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .contact-card:hover{border-color:var(--thread);transform:translateY(-2px);}
+  .contact-card .clabel{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:#9a9d92;
+    margin-bottom:10px;
+  }
+  .contact-card .cval{font-size:16px;font-weight:600;color:var(--white);word-break:break-word;}
+ 
+  footer{
+    padding:36px 0;
+    text-align:center;
+    font-size:13px;
+    color:#8b8e83;
+    background:var(--ink);
+  }
+  footer .mono{opacity:.7;}
+ 
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--thread);
+    outline-offset:3px;
+  }
+ 
+  @media (max-width:640px){
+    section{padding:64px 0;}
+    .project-card{padding:26px;}
+  }
+</style>
+</head>
+<body>
+ 
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-name">Harini<span style="color:var(--thread)">.</span></a>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#journey">Journey</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+ 
+<main id="top">
+ 
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Computer Science & Business Systems student · Trichy, India</div>
+      <h1>I build small, working things &mdash; <em>then figure out what broke.</em></h1>
+      <p class="lede">I'm Harini, a Third year Computer Science & Business Systems student who's spent the last year picking up Java and web development one project at a time.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn btn-solid">See my projects →</a>
+        <a href="mailto:hariniparameswaran600@gmail.com" class="btn btn-outline">Say hello</a>
+      </div>
+      <div class="hero-meta">
+        <div><strong>2</strong>shipped projects</div>
+        <div><strong>2024&ndash;28</strong>B.Tech in progress</div>
+        <div><strong>3</strong>languages spoken</div>
+        <div><strong>1</strong>studio &amp; channel run solo</div>
+      </div>
+    </div>
+  </section>
+ 
+  <div class="stitch-divider" aria-hidden="true">
+    <span class="tag">01 · Work</span>
+    <svg viewBox="0 0 400 14" preserveAspectRatio="none"><line x1="0" y1="7" x2="400" y2="7" stroke="currentColor" stroke-width="2" stroke-dasharray="10 8" stroke-linecap="round"/></svg>
+  </div>
+ 
+  <!-- PROJECTS -->
+  <section id="work">
+    <div class="wrap">
+      <div class="eyebrow">Selected work</div>
+      <h2 style="font-size:clamp(28px,4vw,40px); max-width:600px;">Two projects I actually finished (which, in student-land, counts for a lot).</h2>
+ 
+      <div class="projects-grid">
+ 
+        <div class="project-card">
+          <div class="project-head">
+            <div>
+              <h3>MeterFlow</h3>
+              <div class="project-role">API Billing Platform</div>
+            </div>
+          </div>
+          <div class="stack">
+            <span>Java</span><span>Spring Boot</span><span>MySQL</span><span>React</span>
+          </div>
+          <p>I wanted to understand what actually happens behind a "usage-based billing" API &mdash; the kind SaaS products use to track and charge for API calls. So I built one myself: a platform that manages users, generates API keys, tracks usage, and turns that into billing data.</p>
+          <p>The backend runs on Java and Spring Boot with a proper layered structure &mdash; controllers, services, repositories &mdash; instead of dumping everything into one file like my earlier attempts. MySQL handles the users, keys, and usage logs.</p>
+          <div class="learned"><strong>What I got out of it:</strong> my first real sense of how backend architecture holds together when an app has more than one moving part &mdash; and why "just make it work" and "make it work cleanly" are very different problems.</div>
+        </div>
+ 
+        <div class="project-card teal">
+          <div class="project-head">
+            <div>
+              <h3>Rini Web Studio</h3>
+              <div class="project-role">Portfolio & web development studio</div>
+            </div>
+          </div>
+          <div class="stack">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive Design</span>
+          </div>
+          <p>This one started as a way to teach myself responsive layout properly, and turned into an actual small business. It's the site I use to show potential clients what a Rini Web Studio site looks like &mdash; services, past work, and a way to get in touch.</p>
+          <p>I paid close attention to things that are easy to skip as a beginner: layout that holds up on a phone, a homepage that loads fast, and a structure search engines can actually read.</p>
+          <div class="learned"><strong>What I got out of it:</strong> the gap between "a website that works on my laptop" and "a website that works for a client's actual customers" &mdash; and a growing client-facing habit of writing things simply.</div>
+        </div>
+ 
+      </div>
+    </div>
+  </section>
+ 
+  <div class="stitch-divider" aria-hidden="true">
+    <span class="tag">02 · Skills</span>
+    <svg viewBox="0 0 400 14" preserveAspectRatio="none"><line x1="0" y1="7" x2="400" y2="7" stroke="currentColor" stroke-width="2" stroke-dasharray="10 8" stroke-linecap="round"/></svg>
+  </div>
+ 
+  <!-- SKILLS -->
+  <section id="skills" style="background:var(--paper-alt);">
+    <div class="wrap">
+      <div class="eyebrow">What I work with</div>
+      <h2 style="font-size:clamp(28px,4vw,40px); max-width:600px;">Tools I'm comfortable with, and a few I'm still getting comfortable with.</h2>
+ 
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4>Programming</h4>
+          <ul>
+            <li>Java <span class="skill-tag-note">core + Spring Boot</span></li>
+            <li>Python <span class="skill-tag-note">scripting</span></li>
+            <li>C <span class="skill-tag-note">fundamentals</span></li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h4>Web</h4>
+          <ul>
+            <li>HTML <span class="skill-tag-note">semantic</span></li>
+            <li>CSS <span class="skill-tag-note">responsive</span></li>
+            <li>JavaScript <span class="skill-tag-note">DOM basics</span></li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h4>Data & tools</h4>
+          <ul>
+            <li>DBMS <span class="skill-tag-note">basics</span></li>
+            <li>Git & GitHub <span class="skill-tag-note">daily use</span></li>
+            <li>VS Code <span class="skill-tag-note">daily use</span></li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h4>Digital marketing</h4>
+          <ul>
+            <li>SEO <span class="skill-tag-note">applied</span></li>
+            <li>Google Ads <span class="skill-tag-note">basics</span></li>
+            <li>Site optimization <span class="skill-tag-note">applied</span></li>
+          </ul>
+        </div>
+      </div>
+ 
+      <div class="langs">
+        <div class="lang-item">
+          <div class="lname">Tamil</div>
+          <div class="lang-bar"><i style="width:100%"></i></div>
+          <small>Bilingual · C2</small>
+        </div>
+        <div class="lang-item">
+          <div class="lname">English</div>
+          <div class="lang-bar"><i style="width:75%"></i></div>
+          <small>Upper Intermediate · B2</small>
+        </div>
+        <div class="lang-item">
+          <div class="lname">Japanese</div>
+          <div class="lang-bar"><i style="width:20%"></i></div>
+          <small>Beginner · A1</small>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <div class="stitch-divider" aria-hidden="true">
+    <span class="tag">03 · Journey</span>
+    <svg viewBox="0 0 400 14" preserveAspectRatio="none"><line x1="0" y1="7" x2="400" y2="7" stroke="currentColor" stroke-width="2" stroke-dasharray="10 8" stroke-linecap="round"/></svg>
+  </div>
+ 
+  <!-- EDUCATION / EXPERIENCE -->
+  <section id="journey">
+    <div class="wrap">
+      <div class="eyebrow">Education & experience</div>
+      <h2 style="font-size:clamp(28px,4vw,40px); max-width:600px;">Where I've studied, and where I've put it to work.</h2>
+ 
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">04/2026&ndash;06/2026</div>
+          <div class="tl-body">
+            <h3>Java Developer</h3>
+            <div class="tl-org">Labmentix · Remote</div>
+            <ul>
+              <li>Developed and maintained Java applications, focused on performance and responsiveness.</li>
+              <li>Wrote unit tests to catch defects before they became problems.</li>
+              <li>Optimized existing code and algorithms for better performance.</li>
+            </ul>
+          </div>
+        </div>
+ 
+        <div class="tl-item">
+          <div class="tl-date">2024&ndash;2028</div>
+          <div class="tl-body">
+            <h3>B.Tech, Computer Science & Business Systems</h3>
+            <div class="tl-org">Saranathan College of Engineering, Tiruchi · CGPA 7.5 (through 4th semester)</div>
+            <ul>
+              <li>Coursework spanning CS fundamentals, business systems, and applied technology.</li>
+            </ul>
+          </div>
+        </div>
+ 
+        <div class="tl-item">
+          <div class="tl-date">2022&ndash;2024</div>
+          <div class="tl-body">
+            <h3>12th Standard, Computer Science</h3>
+            <div class="tl-org">Sri Jayendra Matriculation Higher Secondary School, Trichy· 74%</div>
+            <ul>
+              <li>Built a foundation in science and mathematics ahead of engineering study.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="eyebrow" style="margin-top:56px;">Certificates & wins</div>
+      <div class="chips-row">
+        <div class="chip"><span class="dot"></span>Programming in Java &mdash; NPTEL, Elite + Silver (Nov 2025)</div>
+        <div class="chip"><span class="dot"></span>AI Engineering Bootcamp &mdash; Udemy (Dec 2025)</div>
+        <div class="chip"><span class="dot"></span>2nd Prize, Science Quiz &mdash; Mookabigai College of Engineering</div>
+        <div class="chip"><span class="dot"></span>2nd Prize, Photography &mdash; Mookabigai College of Engineering</div>
+      </div>
+    </div>
+  </section>
+ 
+  <div class="stitch-divider" aria-hidden="true">
+    <span class="tag">04 · About</span>
+    <svg viewBox="0 0 400 14" preserveAspectRatio="none"><line x1="0" y1="7" x2="400" y2="7" stroke="currentColor" stroke-width="2" stroke-dasharray="10 8" stroke-linecap="round"/></svg>
+  </div>
+ 
+  <!-- ABOUT -->
+  <section id="about" style="background:var(--paper-alt);">
+    <div class="wrap">
+      <div class="eyebrow">A bit more about me</div>
+      <div class="about-split">
+        <div>
+          <h2 style="font-size:clamp(26px,3.5vw,34px); margin-bottom:18px;">Building software during the week, running a small studio and a story channel around it.</h2>
+          <p>Alongside my degree, I run Rini Web Studio &mdash; a small web-building service &mdash; and produce a children's story channel on YouTube, where I've been experimenting with AI-assisted video tools to speed up production without losing the handmade feel of the stories.</p>
+          <p>I'm not going to pretend I've got it all figured out. A lot of what's on this page is stuff I learned by breaking it first. But I like that about building things &mdash; you find out fast what you actually understand.</p>
+        </div>
+        <div class="hobby-card">
+          <h4>Outside the screen</h4>
+          <ul>
+            <li>Stitching &mdash; small, patient, and the opposite of debugging</li>
+            <li>Reading novels &mdash; mostly fiction, occasionally the reason I stay up too late</li>
+            <li>Writing & producing children's stories for YouTube</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="wrap">
+      <div class="eyebrow">Get in touch</div>
+      <h2>Have a project, an opportunity, or just a question? I'd like to hear it.</h2>
+      <p class="lede">I'm open to internships, freelance web projects, and honestly just good conversations about code.</p>
+ 
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:hariniparameswaran600@gmail.com">
+          <div class="clabel">Email</div>
+          <div class="cval">hariniparameswaran600@gmail.com</div>
+        </a>
+        <a class="contact-card" href="https://linkedin.com/in/hariniparameswaran0306" target="_blank" rel="noopener">
+          <div class="clabel">LinkedIn</div>
+          <div class="cval">hariniparameswaran0306</div>
+        </a>
+        <a class="contact-card" href="https://github.com/HARINI-0306" target="_blank" rel="noopener">
+          <div class="clabel">GitHub</div>
+          <div class="cval">HARINI-0306</div>
+        </a>
+        <a class="contact-card" href="tel:+919600366692">
+          <div class="clabel">Phone</div>
+          <div class="cval">+91 96003 66692</div>
+        </a>
+      </div>
+    </div>
+  </section>
+ 
+</main>
+ 
+<footer>
+  <span class="mono">Designed & built by Harini · Trichy, India · <span id="year"></span></span>
+</footer>
+ 
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+ 
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+ 
+</body>
+</html>
